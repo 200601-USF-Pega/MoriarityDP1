@@ -1,10 +1,14 @@
 package com.revature.fantasyfootball.dao;
 
+import java.util.ArrayList;
+
 import com.revature.fantasyfootball.model.FantasyTeam;
+import com.revature.fantasyfootball.model.User;
 
 public interface FantasyTeamDAO {
 
 	public FantasyTeam getFantasyTeam(String user);
+	public ArrayList<FantasyTeam> getTeamsForUser(User user);
 	public boolean makeNewFantasyTeam(FantasyTeam newTeam);
 	public boolean dropFantasyTeam(FantasyTeam team);
 	public boolean replaceQB(String user, String newQb);

@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.fantasyfootball.model.FantasyTeam;
+import com.revature.fantasyfootball.model.User;
 import com.revature.fantasyfootball.services.DAOUtilities;
 
 public class FantasyTeamDAOImpl implements FantasyTeamDAO{
@@ -43,6 +45,38 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 		}
 		return team;
 	}
+	
+	@Override
+	public ArrayList<FantasyTeam> getTeamsForUser(User user) {
+		ArrayList<FantasyTeam> teams = new ArrayList<>();
+		try {
+			connection = DAOUtilities.getConnection();
+			stmt = connection.prepareStatement("SELECT * FROM FANTASY_TEAMS WHERE username=?");
+			stmt.setString(1, user.getUsername());
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				FantasyTeam team = new FantasyTeam();
+				team.setUser(rs.getString("username"));
+				team.setTeamName(rs.getString("team_name"));
+				team.setQb(rs.getString("qb"));
+				team.setRb1(rs.getString("rb1"));
+				team.setRb2(rs.getString("rb2"));
+				team.setWr1(rs.getString("wr1"));
+				team.setWr2(rs.getString("wr2"));
+				team.setTe(rs.getString("te"));
+				team.setFlex(rs.getString("flex"));
+				team.setDSt(rs.getString("d_st"));
+				team.setK(rs.getString("k"));
+				
+				teams.add(team);
+			}
+			
+		} catch (SQLException e) {
+			LOGGER.debug("at getTeamsForUser");
+		}
+		
+		return teams;
+	}
 
 	@Override
 	public boolean makeNewFantasyTeam(FantasyTeam newTeam) {
@@ -76,8 +110,9 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	public boolean dropFantasyTeam(FantasyTeam team) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("DELETE FROM FANTASY_TEAMS WHERE username=?");
+			stmt = connection.prepareStatement("DELETE FROM FANTASY_TEAMS WHERE username=? AND team_name=?");
 			stmt.setString(1, team.getUser());
+			stmt.setString(2, team.getTeamName());
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -250,5 +285,7 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 			return false;
 		}
 	}
+
+	
 
 }
