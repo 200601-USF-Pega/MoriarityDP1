@@ -23,7 +23,7 @@ public class AdminDAOImpl implements AdminDAO{
 	public boolean updateInjury(Injuries injury) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE INJURIES SET health_status=?, injury=?, week_to_return=? WHERE name=?");
+			stmt = connection.prepareStatement("update injuries set health_status=?, injury=?, week_to_return=? where name=?;");
 			stmt.setString(1, String.valueOf(injury.getHealthStatus()));
 			stmt.setString(2, injury.getInjury());
 			stmt.setInt(3, injury.getWeekToReturn());
