@@ -19,11 +19,12 @@ public class FantasyTeamService {
 
 	FantasyTeamDAO ftDb = new FantasyTeamDAOImpl();
 	
-	@GET
+	@POST
 	@Path("/team")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getTeam(User user) {
-		return Response.ok(ftDb.getFantasyTeam(user.getUsername())).build();
+	public Response getTeam(FantasyTeam team) {
+		return Response.ok(ftDb.getFantasyTeam(team.getUser(), team.getTeamName())).build();
 	}
 	
 	@POST
@@ -48,5 +49,104 @@ public class FantasyTeamService {
 	public Response deleteTeam(FantasyTeam team) {
 		ftDb.dropFantasyTeam(team);
 		return Response.ok().build();
+	}
+	
+	@POST
+	@Path("/replaceQB")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceQB(FantasyTeam team) {
+		if (ftDb.replaceQB(team.getUser(), team.getTeamName(), team.getQb())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceRB1")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceRB1(FantasyTeam team) {
+		if (ftDb.replaceRB1(team.getUser(), team.getTeamName(), team.getRb1())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceRB2")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceRB2(FantasyTeam team) {
+		if (ftDb.replaceRB2(team.getUser(), team.getTeamName(), team.getRb2())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceWR1")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceWR1(FantasyTeam team) {
+		if (ftDb.replaceWR1(team.getUser(), team.getTeamName(), team.getWr1())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceWR2")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceWR2(FantasyTeam team) {
+		if (ftDb.replaceWR2(team.getUser(), team.getTeamName(), team.getWr2())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceTE")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceTE(FantasyTeam team) {
+		if (ftDb.replaceTE(team.getUser(), team.getTeamName(), team.getTe())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceFlex")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceFlex(FantasyTeam team) {
+		if (ftDb.replaceFlex(team.getUser(), team.getTeamName(), team.getFlex())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceDST")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceDST(FantasyTeam team) {
+		if (ftDb.replaceDST(team.getUser(), team.getTeamName(), team.getDSt())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
+	}
+	
+	@POST
+	@Path("/replaceK")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response replaceK(FantasyTeam team) {
+		if (ftDb.replaceK(team.getUser(), team.getTeamName(), team.getK())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
 	}
 }

@@ -3,6 +3,7 @@ package com.revature.fantasyfootball.web;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,7 +26,6 @@ public class AdminService {
 	@Path("/addir")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addToIR(Injuries injury) {
-		System.out.println(injury.toString());
 		if (adminDb.addToIR(injury)) {
 			return Response.status(201).build();
 		} else {
@@ -48,5 +48,13 @@ public class AdminService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getIR() {
 		return Response.ok((ArrayList<Injuries>) irDb.getIRList()).build();
+	}
+	
+	@DELETE
+	@Path("/delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteFromIR(Injuries injury) {
+		adminDb.deleteFromIR(injury);
+		return Response.status(201).build();
 	}
 }

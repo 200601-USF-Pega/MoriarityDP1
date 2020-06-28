@@ -20,12 +20,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	PreparedStatement stmt = null;
 	
 	@Override
-	public FantasyTeam getFantasyTeam(String user) {
+	public FantasyTeam getFantasyTeam(String user, String teamName) {
 		FantasyTeam team = new FantasyTeam();
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("SELECT * FROM FANTASY_TEAMS WHERE username=?");
+			stmt = connection.prepareStatement("SELECT * FROM FANTASY_TEAMS WHERE username=? AND team_name=?");
 			stmt.setString(1, user);
+			stmt.setString(2, teamName);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				team.setUser(rs.getString("username"));
@@ -125,12 +126,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceQB(String user, String newQb) {
+	public boolean replaceQB(String user, String teamName, String newQb) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET qb=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET qb=? WHERE username=? AND team_name=?");
 			stmt.setString(1, newQb);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -143,12 +145,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceRB1(String user, String newRb1) {
+	public boolean replaceRB1(String user, String teamName, String newRb1) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET rb1=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET rb1=? WHERE username=? AND team_name=?");
 			stmt.setString(1,  newRb1);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -161,12 +164,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceRB2(String user, String newRb2) {
+	public boolean replaceRB2(String user, String teamName, String newRb2) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET rb2=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET rb2=? WHERE username=? AND team_name=?");
 			stmt.setString(1,  newRb2);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -179,12 +183,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceWR1(String user, String newWr1) {
+	public boolean replaceWR1(String user, String teamName, String newWr1) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET wr1=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET wr1=? WHERE username=? AND team_name=?");
 			stmt.setString(1,  newWr1);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -197,12 +202,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceWR2(String user, String newWr2) {
+	public boolean replaceWR2(String user, String teamName, String newWr2) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET wr2=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET wr2=? WHERE username=? AND team_name=?;");
 			stmt.setString(1,  newWr2);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -215,12 +221,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceTE(String user, String newTe) {
+	public boolean replaceTE(String user, String teamName, String newTe) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET te=? WHERE username=?;");
-			stmt.setString(1,  newTe);
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET te=? WHERE username=? AND team_name=?;");
+			stmt.setString(1, newTe);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -233,12 +240,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceFlex(String user, String newFlex) {
+	public boolean replaceFlex(String user, String teamName, String newFlex) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET flex=? WHERE username=?;");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET flex=? WHERE username=? AND team_name=?;");
 			stmt.setString(1,  newFlex);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -251,12 +259,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceDST(String user, String newDSt) {
+	public boolean replaceDST(String user, String teamName, String newDSt) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET d_st=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET d_st=? WHERE username=? AND team_name=?;");
 			stmt.setString(1,  newDSt);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -269,12 +278,13 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 	}
 
 	@Override
-	public boolean replaceK(String user, String newK) {
+	public boolean replaceK(String user, String teamName, String newK) {
 		try {
 			connection = DAOUtilities.getConnection();
-			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET k=? WHERE username=?");
+			stmt = connection.prepareStatement("UPDATE FANTASY_TEAMS SET k=? WHERE username=? AND team_name=?");
 			stmt.setString(1,  newK);
 			stmt.setString(2, user);
+			stmt.setString(3, teamName);
 			if (stmt.executeUpdate() != 0) {
 				return true;
 			} else {
@@ -285,7 +295,4 @@ public class FantasyTeamDAOImpl implements FantasyTeamDAO{
 			return false;
 		}
 	}
-
-	
-
 }
