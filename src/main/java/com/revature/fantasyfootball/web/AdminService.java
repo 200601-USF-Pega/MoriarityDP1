@@ -11,15 +11,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.fantasyfootball.dao.AdminDAO;
 import com.revature.fantasyfootball.dao.AdminDAOImpl;
 import com.revature.fantasyfootball.dao.InjuriesDAO;
 import com.revature.fantasyfootball.dao.InjuriesDAOImpl;
 import com.revature.fantasyfootball.model.Injuries;
+import com.revature.fantasyfootball.model.NFLSchedule;
 
 @Path("/admin")
 public class AdminService {
 
+	static Logger LOGGER = LogManager.getLogger(FantasyTeamService.class);
 	AdminDAO adminDb = new AdminDAOImpl();
 	InjuriesDAO irDb = new InjuriesDAOImpl();
 	@POST
@@ -27,8 +32,11 @@ public class AdminService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addToIR(Injuries injury) {
 		if (adminDb.addToIR(injury)) {
+			LOGGER.info("Successful add to IR");
 			return Response.status(201).build();
+			
 		} else {
+			LOGGER.error("ERROR: Player could not be added to IR");
 			return Response.status(500).build();
 		}
 		
@@ -57,4 +65,21 @@ public class AdminService {
 		adminDb.deleteFromIR(injury);
 		return Response.status(201).build();
 	}
+	
+	@POST
+	@Path("/updatescores")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateScores(ArrayList<NFLSchedule> week) {
+		for (NFLSchedule game: week) {
+			adminDb.updateGame(game);
+		}
+		
+		adminDb.updateWins();
+		adminDb.updateLosses();
+		adminDb.updateTies();
+		adminDb.updateNextOpponent();
+		return Response.status(201).build();
+	}
+	
+	
 }

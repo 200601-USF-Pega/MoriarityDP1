@@ -28,10 +28,14 @@ public class UserService {
 	}
 	
 	@POST
+	@Path("/adduser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(User user) {
-		userDb.addUser(user.getUsername(), user.getPassword());
-		return Response.status(201).build();
+		if (userDb.addUser(user.getUsername(), user.getPassword())) {
+			return Response.status(201).build();
+		} else {
+			return Response.status(401).build();
+		}
 	}
 	
 }
